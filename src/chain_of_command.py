@@ -69,6 +69,6 @@ def client_code(handler: Handler, foods) -> None:
 
 if __name__ == "__main__":
     handler = build_chain_of_responsibility([Handlers.MONKEY, Handlers.SQUIRREL])
-    print("Chain: Monkey > Squirrel > Dog")
+    print("Chain: Monkey > Squirrel")
     client_code(handler, ["Nut", "Banana", "Cup of coffee"])
     print("\n")
