@@ -11,6 +11,7 @@ class Handler(ABC):
     def set_next(self, handler):
         pass
 
+
 class AbstractHandler(Handler):
     """An abstract class for handling requests. It also implements the next so it shoudl not be implemented in the subclasses"""
     _next_handler: Handler = None
@@ -27,6 +28,7 @@ class AbstractHandler(Handler):
 
         return None
 
+
 class MonkeyHandler(AbstractHandler):
     def handle(self, request: Any) -> str:
         if request == "Banana":
@@ -34,9 +36,10 @@ class MonkeyHandler(AbstractHandler):
         else:
             return super().handle(request)
 
+
 class SquirrelHandler(AbstractHandler):
     def handle(self, request: Any) -> str:
-        if request== "Nut":
+        if request == "Nut":
             return f"Squirrel: I'll eat the {request}"
         else:
             return super().handle(request)
@@ -45,7 +48,6 @@ class SquirrelHandler(AbstractHandler):
 class Handlers(Enum):
     MONKEY = MonkeyHandler
     SQUIRREL = SquirrelHandler
-
 
 
 def build_chain_of_responsibility(handlers: List[Handlers]) -> Handler:
@@ -58,6 +60,7 @@ def build_chain_of_responsibility(handlers: List[Handlers]) -> Handler:
         handler.set_next(handler_type.value())
     return handler
 
+
 def client_code(handler: Handler, foods) -> None:
     for food in foods:
         print(f"\nClient: Who wants a {food}?")
@@ -67,8 +70,10 @@ def client_code(handler: Handler, foods) -> None:
         else:
             print(f"  {food} was left untouched.", end="")
 
+
 if __name__ == "__main__":
-    handler = build_chain_of_responsibility([Handlers.MONKEY, Handlers.SQUIRREL])
+    handler = build_chain_of_responsibility(
+        [Handlers.MONKEY, Handlers.SQUIRREL])
     print("Chain: Monkey > Squirrel")
     client_code(handler, ["Nut", "Banana", "Cup of coffee"])
     print("\n")
